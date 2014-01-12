@@ -223,6 +223,11 @@ class Category
 		 * 1 = German
 		 */
 
+//
+echo "##lib category. Start function determineCategory\n";
+echo "##- Releasename: ".$releasename."\n";
+echo "##- groupID: ".$groupID."\n";
+//
 		if ($this->catlanguage == "0") {
 			if ($this->determineCategoryNormal($releasename, $groupID)) {
 				return $this->tmpCat;
@@ -256,34 +261,63 @@ class Category
 	// returns -1 if no category is appropriate from the group name.
 	public function determineCategoryNormal($releasename = "", $groupID)
 	{
+//
+echo "##lib category. determineCategoryNormal\n";
+//
 		//Try against all functions, if still nothing, return Cat Misc.
 		if ($this->isMisc($releasename)) {
+//
+echo "  -isMisc\n";
+//
 			return $this->tmpCat;
 		}
 		// Note that in byGroup() some overrides occur...
 		if ($this->byGroup($releasename, $groupID)) {
+//
+echo "  -byGroup\n";
+//
 			return $this->tmpCat;
 		}
 		if ($this->isPC($releasename)) {
+//
+echo "  -isPC\n";
+//
 			return $this->tmpCat;
 		}
 		if ($this->isXXX($releasename)) {
+//
+echo "  -isXXX\n";
+//
 			return $this->tmpCat;
 		}
 		if ($this->isTV($releasename)) {
+//
+echo "  -isTV\n";
+//
 			return $this->tmpCat;
 		}
 		if ($this->isMovie($releasename)) {
+//
+echo "  -isMovie\n";
+//
 			return $this->tmpCat;
 		}
 		if ($this->isConsole($releasename)) {
+//
+echo "  -isConsole\n";
+//
 			return $this->tmpCat;
 		}
 		if ($this->isMusic($releasename)) {
+//
+echo "  -isMusic\n";
+//
 			return $this->tmpCat;
 		}
 		if ($this->isBook($releasename)) {
-			return $this->tmpCat;
+//
+echo "  -isBook\n";
+//			return $this->tmpCat;
 		}
 	}
 
