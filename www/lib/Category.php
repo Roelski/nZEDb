@@ -267,56 +267,56 @@ echo "##lib category. determineCategoryNormal\n";
 		//Try against all functions, if still nothing, return Cat Misc.
 		if ($this->isMisc($releasename)) {
 //
-echo "  -isMisc\n";
+echo "  -isMisc was used\n";
 //
 			return $this->tmpCat;
 		}
 		// Note that in byGroup() some overrides occur...
 		if ($this->byGroup($releasename, $groupID)) {
 //
-echo "  -byGroup\n";
+echo "  -byGroup was used\n";
 //
 			return $this->tmpCat;
 		}
 		if ($this->isPC($releasename)) {
 //
-echo "  -isPC\n";
+echo "  -isPC was used\n";
 //
 			return $this->tmpCat;
 		}
 		if ($this->isXXX($releasename)) {
 //
-echo "  -isXXX\n";
+echo "  -isXXX was used\n";
 //
 			return $this->tmpCat;
 		}
 		if ($this->isTV($releasename)) {
 //
-echo "  -isTV\n";
+echo "  -isTV was used\n";
 //
 			return $this->tmpCat;
 		}
 		if ($this->isMovie($releasename)) {
 //
-echo "  -isMovie\n";
+echo "  -isMovie was used\n";
 //
 			return $this->tmpCat;
 		}
 		if ($this->isConsole($releasename)) {
 //
-echo "  -isConsole\n";
+echo "  -isConsole was used\n";
 //
 			return $this->tmpCat;
 		}
 		if ($this->isMusic($releasename)) {
 //
-echo "  -isMusic\n";
+echo "  -isMusic was used\n";
 //
 			return $this->tmpCat;
 		}
 		if ($this->isBook($releasename)) {
 //
-echo "  -isBook\n";
+echo "  -isBook was used\n";
 //			return $this->tmpCat;
 		}
 	}
@@ -326,6 +326,10 @@ echo "  -isBook\n";
 	{
 		$groups = new Groups();
 		$groupRes = $groups->getByID($groupID);
+//
+echo "##-byGroup.\n##--GroupID: ".$groupID."\n##--Test is_array: ".is_array($groupRes)."\n";
+echo "##--groupRes[name]: ".$groupRes["name"]."\n";
+//
 		if (is_array($groupRes)) {
 			if (preg_match('/alt\.binaries\.0day\.stuffz/', $groupRes["name"])) {
 				if ($this->isBook($releasename)) {
