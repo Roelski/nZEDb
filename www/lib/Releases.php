@@ -2,6 +2,7 @@
 
 require_once nZEDb_LIB . 'Util.php';
 
+
 class Releases
 {
 	/* RAR/ZIP Passworded indicator. */
@@ -1292,16 +1293,21 @@ class Releases
 				}
 				$relguid = sha1(uniqid('', true) . mt_rand());
 //
-$roelID = $this->db->queryOneRow(sprintf('SELECT id FROM groups WHERE name='.$s),$db->escapeString($rowcol['gname']));
+echo "##lib/releases.php\n";
+echo "--before getIDByname\n";
+	$groups = new Groups();
+	$roelid = $groups->getIDByName($rowcol['gname']);
+echo "--after getIDByname\n";
 //
 
 				$category = $categorize->determineCategory($cleanName, $rowcol['gname']);
 //
-echo "##lib/releases.php\n";
+				$catroel = $categorize->determineCategory($cleanName, $roelid);
 echo "--cleanName:".$cleanName."\n";
 echo "--rowcol[gname]:".$rowcol['gname']."\n";
-echo "--roelID[ID]: ".$roelID['id']."\n";
 echo "--category :".$category."\n";
+echo "--roelid: ".$roelid."\n";
+echo "--catroel: ".$catroel."\n";
 //
 				$cleanRelName = utf8_encode($cleanRelName);
 				$cleanName = utf8_encode($cleanName);
