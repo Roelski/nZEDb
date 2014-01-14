@@ -223,11 +223,6 @@ class Category
 		 * 1 = German
 		 */
 
-//
-echo "##lib category. Start function determineCategory\n";
-echo "##- Releasename: ".$releasename."\n";
-echo "##- groupID: ".$groupID."\n";
-//
 		if ($this->catlanguage == "0") {
 			if ($this->determineCategoryNormal($releasename, $groupID)) {
 				return $this->tmpCat;
@@ -261,64 +256,35 @@ echo "##- groupID: ".$groupID."\n";
 	// returns -1 if no category is appropriate from the group name.
 	public function determineCategoryNormal($releasename = "", $groupID)
 	{
-//
-echo "##lib category. determineCategoryNormal\n";
-//
-		//Try against all functions, if still nothing, return Cat Misc.
-		if ($this->isMisc($releasename)) {
-//
-echo "  -isMisc was used\n";
-//
-			return $this->tmpCat;
-		}
 		// Note that in byGroup() some overrides occur...
 		if ($this->byGroup($releasename, $groupID)) {
-//
-echo "  -byGroup was used\n";
-//
 			return $this->tmpCat;
 		}
 		if ($this->isPC($releasename)) {
-//
-echo "  -isPC was used\n";
-//
 			return $this->tmpCat;
 		}
 		if ($this->isXXX($releasename)) {
-//
-echo "  -isXXX was used\n";
-//
 			return $this->tmpCat;
 		}
 		if ($this->isTV($releasename)) {
-//
-echo "  -isTV was used\n";
-//
 			return $this->tmpCat;
 		}
 		if ($this->isMovie($releasename)) {
-//
-echo "  -isMovie was used\n";
-//
 			return $this->tmpCat;
 		}
 		if ($this->isConsole($releasename)) {
-//
-echo "  -isConsole was used\n";
-//
 			return $this->tmpCat;
 		}
 		if ($this->isMusic($releasename)) {
-//
-echo "  -isMusic was used\n";
-//
 			return $this->tmpCat;
 		}
 		if ($this->isBook($releasename)) {
-//
-echo "  -isBook was used\n";
-//			return $this->tmpCat;
+			return $this->tmpCat;
 		}
+        //Try against all functions, if still nothing, return Cat Misc.
+        if ($this->isMisc($releasename)) {
+            return $this->tmpCat;
+        }
 	}
 
 	//	Groups.
@@ -326,10 +292,6 @@ echo "  -isBook was used\n";
 	{
 		$groups = new Groups();
 		$groupRes = $groups->getByID($groupID);
-//
-echo "##-byGroup.\n##--GroupID: ".$groupID."\n##--Test is_array: ".is_array($groupRes)."\n";
-echo "##--groupRes[name]: ".$groupRes["name"]."\n";
-//
 		if (is_array($groupRes)) {
 			if (preg_match('/alt\.binaries\.0day\.stuffz/', $groupRes["name"])) {
 				if ($this->isBook($releasename)) {
@@ -457,8 +419,9 @@ echo "##--groupRes[name]: ".$groupRes["name"]."\n";
 				return true;
 			}
 
-			if (preg_match('/alt\.binaries\.((movies|multimedia)\.)?(erotica(\.(amateur|divx))?|ijsklontje)/', $groupRes["name"])) {
+			if (preg_match('/alt\.binaries\..*(erotica|ijsklontje|xxx)/', $groupRes["name"])) {
 				if ($this->isXxx($releasename)) {
+					return true;
 					return $this->tmpCat;
 				}
 				$this->tmpCat = Category::CAT_XXX_OTHER;
@@ -1027,7 +990,7 @@ echo "##--groupRes[name]: ".$groupRes["name"]."\n";
 	//	XXX.
 	public function isXxx($releasename)
 	{
-		if (preg_match('/(XXX|PORNOLATiON|SWE6RUS|masturbation|masturebate|lesbian|cumming|ClubSeventeen|Errotica|Erotica|EroticaX|nymph|sexontv|My_Stepfather_Made_Me|slut|\bwhore\b)/i', $releasename)) {
+		if (preg_match('/(XXX|Porn|PORNOLATiON|SWE6RUS|masturbation|masturebate|lesbian|cumming|ClubSeventeen|Errotica|Erotica|EroticaX|nymph|sexontv|My_Stepfather_Made_Me|slut|\bwhore\b)/i', $releasename)) {
 			if ($this->isXxx264($releasename)) {
 				return true;
 			}
@@ -1515,9 +1478,6 @@ class CategoryDanish extends Category
 	public function determineCategory($releasename = "", $groupID)
 	{
 		//Try against all functions, if still nothing, return Cat Misc.
-		if (Category::isMisc($releasename)) {
-			return $this->tmpCat;
-		}
 		if ($this->byGroup($releasename, $groupID)) {
 			return $this->tmpCat;
 		}
@@ -1542,6 +1502,9 @@ class CategoryDanish extends Category
 		if (Category::isBook($releasename)) {
 			return $this->tmpCat;
 		}
+        if (Category::isMisc($releasename)) {
+            return $this->tmpCat;
+        }
 	}
 
 	// Groups.
@@ -2073,9 +2036,6 @@ class CategoryFrench extends Category
 	public function determineCategory($releasename = "", $groupID)
 	{
 		//Try against all functions, if still nothing, return Cat Misc.
-		if (Category::isMisc($releasename)) {
-			return $this->tmpCat;
-		}
 		if ($this->byGroup($releasename, $groupID)) {
 			return $this->tmpCat;
 		}
@@ -2100,6 +2060,9 @@ class CategoryFrench extends Category
 		if (Category::isBook($releasename)) {
 			return $this->tmpCat;
 		}
+        if (Category::isMisc($releasename)) {
+            return $this->tmpCat;
+        }
 	}
 
 	// Groups.
@@ -2628,9 +2591,6 @@ class CategoryGerman extends Category
 	public function determineCategory($releasename = "", $groupID)
 	{
 		//Try against all functions, if still nothing, return Cat Misc.
-		if (Category::isMisc($releasename)) {
-			return $this->tmpCat;
-		}
 		if ($this->byGroup($releasename, $groupID)) {
 			return $this->tmpCat;
 		}
@@ -2655,6 +2615,9 @@ class CategoryGerman extends Category
 		if (Category::isBook($releasename)) {
 			return $this->tmpCat;
 		}
+        if (Category::isMisc($releasename)) {
+            return $this->tmpCat;
+        }
 	}
 
 	public function byGroup($releasename, $groupID)
