@@ -223,6 +223,12 @@ class Category
 		 * 1 = German
 		 */
 
+// debug
+echo "#determineCategory.\n";
+echo "-Releasename: ".$releasename."\n";
+echo "-Releasename: ".$releasename."\n";
+echo "-groupID: ".$groupID."\n";
+// end debug
 		if ($this->catlanguage == "0") {
 			if ($this->determineCategoryNormal($releasename, $groupID)) {
 				return $this->tmpCat;
@@ -256,33 +262,63 @@ class Category
 	// returns -1 if no category is appropriate from the group name.
 	public function determineCategoryNormal($releasename = "", $groupID)
 	{
+// debug
+echo "##determineCategoryNormal\n";
+// end debug
 		// Note that in byGroup() some overrides occur...
 		if ($this->byGroup($releasename, $groupID)) {
+// debug
+echo "--byGroup used. tmpCat: ".$this->tmpCat."\n";
+// end debug
 			return $this->tmpCat;
 		}
 		if ($this->isPC($releasename)) {
+// debug
+echo "--isPC used. tmpCat: ".$this->tmpCat."\n";
+// end debug
 			return $this->tmpCat;
 		}
 		if ($this->isXXX($releasename)) {
+// debug
+echo "--isXXX used. tmpCat: ".$this->tmpCat."\n";
+// end debug
 			return $this->tmpCat;
 		}
 		if ($this->isTV($releasename)) {
+// debug
+echo "--isTV used. tmpCat: ".$this->tmpCat."\n";
+// end debug
 			return $this->tmpCat;
 		}
 		if ($this->isMovie($releasename)) {
+// debug
+echo "--isMovie used. tmpCat: ".$this->tmpCat."\n";
+// end debug
 			return $this->tmpCat;
 		}
 		if ($this->isConsole($releasename)) {
+// debug
+echo "--isConsole used. tmpCat: ".$this->tmpCat."\n";
+// end debug
 			return $this->tmpCat;
 		}
 		if ($this->isMusic($releasename)) {
+// debug
+echo "--isMusic used. tmpCat: ".$this->tmpCat."\n";
+// end debug
 			return $this->tmpCat;
 		}
 		if ($this->isBook($releasename)) {
+// debug
+echo "--isBook used. tmpCat: ".$this->tmpCat."\n";
+// end debug
 			return $this->tmpCat;
 		}
         //Try against all functions, if still nothing, return Cat Misc.
         if ($this->isMisc($releasename)) {
+// debug
+echo "--isMisc used(last option). tmpCat: ".$this->tmpCat."\n";
+// end debug
             return $this->tmpCat;
         }
 	}
