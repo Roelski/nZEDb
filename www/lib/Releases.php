@@ -1291,8 +1291,18 @@ class Releases
 					$propername = $cleanerName['properlynamed'];
 				}
 				$relguid = sha1(uniqid('', true) . mt_rand());
+//
+$roelID = $this->db->queryOneRow(sprintf('SELECT id FROM groups WHERE name='.$s),$db->escapeString($rowcol['gname']));
+//
 
 				$category = $categorize->determineCategory($cleanName, $rowcol['gname']);
+//
+echo "##lib/releases.php\n";
+echo "--cleanName:".$cleanName."\n";
+echo "--rowcol[gname]:".$rowcol['gname']."\n";
+echo "--roelID[ID]: ".$roelID['id']."\n";
+echo "--category :".$category."\n";
+//
 				$cleanRelName = utf8_encode($cleanRelName);
 				$cleanName = utf8_encode($cleanName);
 				$fromname = utf8_encode($fromname);
@@ -1912,19 +1922,32 @@ class Releases
 
 	public function processReleases($categorize, $postproc, $groupName, $nntp, $echooutput)
 	{
+// debug
+echo "#procesReleases\n";
+echo "-groupName: ".$groupName."\n";
+// end debug
 		$this->echooutput = $echooutput;
 		if ($this->hashcheck == 0) {
 			exit($this->c->error("You must run update_binaries.php to update your collectionhash.\n"));
 		}
 		$db = $this->db;
 
+//
+echo "-groupID before zero: ".$groupID ."\n";
+//
 		$groupID = '';
+//
+echo "-groupID after zero: ".$groupID ."\n";
+//
 
 		if (!empty($groupName)) {
 			$groupInfo = $this->groups->getByName($groupName);
 			$groupID = $groupInfo['id'];
 		}
 
+//
+echo "-groupID after ifnotempty(groupname): ".$groupID ."\n";
+//
 		$this->processReleases = microtime(true);
 		if ($this->echooutput) {
 			echo $this->c->header("\nStarting release update process (" . date('Y-m-d H:i:s') . ")");
@@ -1937,9 +1960,21 @@ class Releases
 			return;
 		}
 
+//
+echo "-groupID BEFORE STAGE1: ".$groupID ."\n";
+//
 		$this->processReleasesStage1($groupID);
+//
+echo "-groupID BEFORE STAGE2: ".$groupID ."\n";
+//
 		$this->processReleasesStage2($groupID);
+//
+echo "-groupID BEFORE STAGE3: ".$groupID ."\n";
+//
 		$this->processReleasesStage3($groupID);
+//
+echo "-groupID BEFORE STAGE4567loop: ".$groupID ."\n";
+//
 		$releasesAdded = $this->processReleasesStage4567_loop($categorize, $postproc, $groupID, $nntp);
 		$this->processReleasesStage4dot5($groupID);
 
