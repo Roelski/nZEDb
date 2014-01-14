@@ -226,7 +226,6 @@ class Category
 // debug
 echo "#determineCategory.\n";
 echo "-Releasename: ".$releasename."\n";
-echo "-Releasename: ".$releasename."\n";
 echo "-groupID: ".$groupID."\n";
 // end debug
 		if ($this->catlanguage == "0") {
@@ -321,6 +320,10 @@ echo "--isMisc used(last option). tmpCat: ".$this->tmpCat."\n";
 // end debug
             return $this->tmpCat;
         }
+// debug
+echo "--end function determineCategoryNormal.\n";
+// end debug
+
 	}
 
 	//	Groups.
